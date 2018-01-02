@@ -38,6 +38,11 @@ global counterGraphTimes
 #global TotalMinutes
 #global TotalSeconds
 
+def SentenceLength():
+   sentencesize = len(my_entry.get())
+   print("Sentence Length is: " + str(sentencesize))
+   my_lablesetnencesize = tk.Label(root, text = "Current Sentence Size is: " + str(sentencesize))
+   my_lablesetnencesize.grid(row = 17, column = 1)
 def refreshVariables():
         del tempcounter[:]
         del RunningTimes[:]
@@ -505,5 +510,7 @@ my_buttonRefresh.grid(row = 4, column = 7)
 
 my_buttonRunTime = tk.Button(root, text = "Save Running Times", font = 10, state=DISABLED, command = RunningTimeToCSV)
 my_buttonRunTime.grid(row = 4, column = 6)
+my_buttonSentenceLength = tk.Button(root, text = "Get Sentence Length", font = 10, command = SentenceLength)
+my_buttonSentenceLength.grid(row = 4, column = 6)
 root.mainloop()
 #Barplot()

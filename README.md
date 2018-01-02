@@ -1,5 +1,5 @@
 # shablockchain
-This is a tool that is used to analyze the sha algorithm used in blockchain technology
+This is a tool that is used to analyze the various SHA algorithms used in blockchain technology
 I utilized Tkinter to allow for a Graphical User Interface
 
 Important:

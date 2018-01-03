@@ -11,4 +11,5 @@ There is limited error handling in this code and still is being fixed annually
 # H2 Description for each file are as follows:
 
 SHA3Blockchainv5.py --> used for allowing the analysis of the SHA algorithm
+
 setup.py --> used for allowing the user to easily install necessary libraries, note-some commands might not work necessarily and is consistently being updated

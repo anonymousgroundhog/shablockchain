@@ -39,7 +39,7 @@ global counterGraphTimes
 #global TotalSeconds
 
 def SentenceLength():
-   sentencesize = len(my_entry.get())
+   sentencesize = len(my_entrySentence.get())
    print("Sentence Length is: " + str(sentencesize))
    my_lablesetnencesize = tk.Label(root, text = "Current Sentence Size is: " + str(sentencesize))
    my_lablesetnencesize.grid(row = 17, column = 1)
@@ -59,10 +59,10 @@ def validateIsInteger(value):
             return None
 
 def RunningTimeToCSV():
-        file_name = str(my_entry7.get() + "Time")
+        file_name = str(my_entryCSVFileName.get() + "Time")
         print("Total running time of current attempts being saved to " + str(file_name))
         counter = 0
-        sentencesize = len(my_entry.get())        
+        sentencesize = len(my_entrySentence.get())        
         if (file_name != "Time" and os.path.isfile(file_name)):
                 download_dir = file_name +".csv"#where you want the file to be downloaded to
                 csv = open(download_dir, "a") 
@@ -81,7 +81,7 @@ def RunningTimeToCSV():
                         csv.write(row)
                     
 def AttemptsToCSV():
-        file_name = str(my_entry7.get() + "Attempts")
+        file_name = str(my_entryCSVFileName.get() + "Attempts")
         print("RUNNING AttemptsToCSV" + str(temp) + " being saved to " + str(file_name))
         counter = 0
                 
@@ -103,7 +103,7 @@ def graphTimes():
         Counter = []
         #CLEAR ALL DATA IF LOOP NUMBER CHANGES
         
-        LoopIter.append(my_entry6.get())
+        LoopIter.append(my_entryNumberTestToRun.get())
         LoopLastVal = len(LoopIter)-1
        
         for x in RunningTimes:
@@ -188,7 +188,7 @@ def graph(data):
     ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,}".format(int(x)))) #FORMAT Y AXIS
 
     #CHANGE X RANGE TICKS DEPENDING ON ITERATIONS
-    Iterations = my_entry6.get()
+    Iterations = my_entryNumberTestToRun.get()
     IntIterations = int(Iterations)
     if (IntIterations >= 25):
        plt.xticks(np.arange(min(dataCount), max(dataCount)+10, 11.0)) #TESTING RIGHT NOW
@@ -199,7 +199,7 @@ def graph(data):
 
     #END
     #IF NUM ZEROS IS GREATER THAN 2 EDIT THE GRAPH Y AXIS
-    NumZero = my_entry4.get()
+    NumZero = my_entry4NumberZeros.get()
     NumZero = int(NumZero)
     MaxYVal = max(data)
     MinYVal = max(data)/3
@@ -225,7 +225,7 @@ def graph(data):
                 
     grid(True)
     #PLOT ONLY IF 1 IS CHOSEN FOR LOOP
-    NumIter = my_entry6.get()
+    NumIter = my_entryNumberTestToRun.get()
     if (NumIter == "1"):
             plot(dataCount, data, "ro")
             plt.show()
@@ -254,14 +254,14 @@ def Barplot():
     plt.show() 
     
 def my_function():
-    NumZeroAcc = my_entry4.get()
-    NumLoopAcc = my_entry6.get()
+    NumZeroAcc = my_entry4NumberZeros.get()
+    NumLoopAcc = my_entryNumberTestToRun.get()
     IsIntNumZeroAcc = validateIsInteger(NumZeroAcc)
     IsIntNumLoopAcc = validateIsInteger(NumLoopAcc)
-    print("NumZero is: " + str(IsIntNumZeroAcc) + " NumLoop is: " + str(IsIntNumLoopAcc) + "Sentence is: " + str(my_entry.get()))
-    if (NumZeroAcc != "" and IsIntNumZeroAcc != "None" and NumLoopAcc != "" and IsIntNumLoopAcc != "None" and my_entry.get() != ""):
-            current_loop = my_entry6.get()
-            file_name = my_entry7.get()
+    print("NumZero is: " + str(IsIntNumZeroAcc) + " NumLoop is: " + str(IsIntNumLoopAcc) + "Sentence is: " + str(my_entrySentence.get()))
+    if (NumZeroAcc != "" and IsIntNumZeroAcc != "None" and NumLoopAcc != "" and IsIntNumLoopAcc != "None" and my_entrySentence.get() != ""):
+            current_loop = my_entryNumberTestToRun.get()
+            file_name = my_entryCSVFileName.get()
             loopiter = list(range(int(current_loop)))
             if (file_name != ""):
                 download_dir = file_name +".csv"#where you want the file to be downloaded to
@@ -285,10 +285,10 @@ def my_function():
                     my_label14 = tk.Label(root, text = str('CURRENT loop: ' + current_loop))
                     my_label14.grid(row = 15, column = 1)
                     ListStringZeros = []  
-                    current_Sentence = my_entry.get()
+                    current_Sentence = my_entrySentence.get()
                     current_Nonce = nonceInc
                     current_Nonce = int(current_Nonce)
-                    current_NumZer = my_entry4.get()
+                    current_NumZer = my_entry4NumberZeros.get()
 
                     #do stuff with USER SENTENCE    
                     my_label2 = tk.Label(root, text = str('CURRENT SENTNECE: ' + current_Sentence))
@@ -432,10 +432,10 @@ def my_function():
             print("RunningTimes were:" + str(RunningTimes))#TESTING ONLY
             print("RunningAlg were:" + str(RunningAlg))#TESTING ONLY
             print("FINISHED RUNNING PROGRAM")
-            my_buttonGraphTimes['state'] = 'normal'
-            my_buttonAttemptsCSV['state'] = 'normal'
-            my_buttonRefresh['state'] = 'normal'
-            my_buttonRunTime['state'] = 'normal'
+            my_buttonSubmitGraphTimes['state'] = 'normal'
+            my_buttonSubmitAttemptsCSV['state'] = 'normal'
+            my_buttonSubmitRefresh['state'] = 'normal'
+            my_buttonSubmitRunTime['state'] = 'normal'
             graph(temp) #GRAPH ONCE COMPLETE LOOP
     
     
@@ -448,35 +448,35 @@ root = tk.Tk("BLOCK HASHING")
 root.title("Blockchain Hashing")    
 #---------------------------------USER INPUT AREA---------------------------------------------------------
 #SENTENCE    
-my_label = tk.Label(root, text = "Sentence: ")
-my_label.config(font=("Courier", 10))
-my_label.grid(row = 0, column = 0)
-my_entry = tk.Entry(root)
-my_entry.grid(row = 0, column = 1)
+my_labelSentence = tk.Label(root, text = "Sentence: ")
+my_labelSentence.config(font=("Courier", 10))
+my_labelSentence.grid(row = 0, column = 0)
+my_entrySentence = tk.Entry(root)
+my_entrySentence.grid(row = 0, column = 1)
 
 
 #NUMBER OF ZEROS
-my_label4 = tk.Label(root, text = "Number of Zeros to account for: ")
-my_label4.config(font=("Courier", 10))
-my_label4.grid(row = 1, column = 0)
-my_entry4 = tk.Entry(root)
-my_entry4.grid(row = 1, column = 1)
+my_labelNumberZeros = tk.Label(root, text = "Number of Zeros to account for: ")
+my_labelNumberZeros.config(font=("Courier", 10))
+my_labelNumberZeros.grid(row = 1, column = 0)
+my_entry4NumberZeros = tk.Entry(root)
+my_entry4NumberZeros.grid(row = 1, column = 1)
 
 
 #NUMBER OF TIMES TO RUN LOOP
-my_label6 = tk.Label(root, text = "How many times to run test: ")
-my_label6.config(font=("Courier", 10))
-my_label6.grid(row = 0, column = 2)
-my_entry6 = tk.Entry(root)
-my_entry6.grid(row = 0, column = 3)
+my_labelNumberTestToRun = tk.Label(root, text = "How many times to run test: ")
+my_labelNumberTestToRun.config(font=("Courier", 10))
+my_labelNumberTestToRun.grid(row = 0, column = 2)
+my_entryNumberTestToRun = tk.Entry(root)
+my_entryNumberTestToRun.grid(row = 0, column = 3)
 
 #NAME THE CSV FILE
 #NUMBER OF TIMES TO RUN LOOP
-my_label7 = tk.Label(root, text = "Name of CSV File: ")
-my_label7.config(font=("Courier", 10))
-my_label7.grid(row = 1, column = 2)
-my_entry7 = tk.Entry(root)
-my_entry7.grid(row = 1, column = 3)
+my_labelCSVFileName = tk.Label(root, text = "Name of CSV File: ")
+my_labelCSVFileName.config(font=("Courier", 10))
+my_labelCSVFileName.grid(row = 1, column = 2)
+my_entryCSVFileName = tk.Entry(root)
+my_entryCSVFileName.grid(row = 1, column = 3)
 
 #PICK HASH TYPE TO USE
 my_labelHash = tk.Label(root, text = 'Pick Hash To Use: ')
@@ -493,24 +493,24 @@ tk.Radiobutton(root, text="SHA2 256 bit", font = 10, padx = 20, variable=SHA, va
 tk.Radiobutton(root, text="SHA 512", font = 10, padx = 20, variable=SHA, value=5).grid(row=3, column = 6)
 
 #SUBMIT BUTTON
-my_button = tk.Button(root, text = "Submit", font = 20, command = my_function)
-my_button.grid(row = 4, column = 2)
+my_buttonSubmit = tk.Button(root, text = "Submit", font = 20, command = my_function)
+my_buttonSubmit.grid(row = 4, column = 2)
 
-my_buttonGraphBarPlot = tk.Button(root, text = "Show Barplot", font = 10, command = Barplot)
-my_buttonGraphBarPlot.grid(row = 4, column = 3)
+my_buttonSubmitGraphBarPlot = tk.Button(root, text = "Show Barplot", font = 10, command = Barplot)
+my_buttonSubmitGraphBarPlot.grid(row = 4, column = 3)
 
-my_buttonGraphTimes = tk.Button(root, text = "Show Running Time", font = 10, state=DISABLED, command = graphTimes)
-my_buttonGraphTimes.grid(row = 4, column = 4)
+my_buttonSubmitGraphTimes = tk.Button(root, text = "Show Running Time", font = 10, state=DISABLED, command = graphTimes)
+my_buttonSubmitGraphTimes.grid(row = 4, column = 4)
 
-my_buttonAttemptsCSV = tk.Button(root, text = "Save Attempts to CSV", font = 10, state=DISABLED, command = AttemptsToCSV)
-my_buttonAttemptsCSV.grid(row = 4, column = 5)
+my_buttonSubmitAttemptsCSV = tk.Button(root, text = "Save Attempts to CSV", font = 10, state=DISABLED, command = AttemptsToCSV)
+my_buttonSubmitAttemptsCSV.grid(row = 4, column = 5)
 
-my_buttonRefresh = tk.Button(root, text = "Refresh All Data", font = 10, state=DISABLED, command = refreshVariables)
-my_buttonRefresh.grid(row = 4, column = 7)
+my_buttonSubmitRefresh = tk.Button(root, text = "Refresh All Data", font = 10, state=DISABLED, command = refreshVariables)
+my_buttonSubmitRefresh.grid(row = 4, column = 7)
 
-my_buttonRunTime = tk.Button(root, text = "Save Running Times", font = 10, state=DISABLED, command = RunningTimeToCSV)
-my_buttonRunTime.grid(row = 4, column = 6)
-my_buttonSentenceLength = tk.Button(root, text = "Get Sentence Length", font = 10, command = SentenceLength)
-my_buttonSentenceLength.grid(row = 4, column = 6)
+my_buttonSubmitRunTime = tk.Button(root, text = "Save Running Times", font = 10, state=DISABLED, command = RunningTimeToCSV)
+my_buttonSubmitRunTime.grid(row = 4, column = 6)
+my_buttonSubmitSentenceLength = tk.Button(root, text = "Get Sentence Length", font = 10, command = SentenceLength)
+my_buttonSubmitSentenceLength.grid(row = 4, column = 6)
 root.mainloop()
 #Barplot()
